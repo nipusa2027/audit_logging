@@ -93,7 +93,7 @@ manager:
     create: true
     annotations: {}
     ## Override the default name of the serviceaccount (the name of your installation)
-    name: ""
+    name: "opentelemetry-operator"
 
   ## Enable ServiceMonitor for Prometheus metrics scrape
   serviceMonitor:
