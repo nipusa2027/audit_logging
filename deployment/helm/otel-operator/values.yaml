@@ -41,7 +41,7 @@ manager:
     repository: ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operator
     tag: ""
   collectorImage:
-    repository: ""
+    repository: otel/opentelemetry-collector-k8s
     tag: 0.98.0
   opampBridgeImage:
     repository: ""
@@ -93,7 +93,7 @@ manager:
     create: true
     annotations: {}
     ## Override the default name of the serviceaccount (the name of your installation)
-    name: "opentelemetry-operator"
+    name: ""
 
   ## Enable ServiceMonitor for Prometheus metrics scrape
   serviceMonitor:
