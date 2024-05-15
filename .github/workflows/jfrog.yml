@@ -1,10 +1,7 @@
 name: Docker Build And Push To Jfrog artifactory
 
-on:
-  push:
-    branches:
-      - master
-      
+on: [push]
+  
 jobs:
   hello_world_job:
     runs-on: ubuntu-latest
