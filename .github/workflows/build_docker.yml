@@ -1,4 +1,4 @@
-name: Docker Build Python
+name: Docker Build
 
 on: [push]
   
