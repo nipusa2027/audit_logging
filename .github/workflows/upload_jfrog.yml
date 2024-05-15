@@ -19,6 +19,6 @@ jobs:
       - name: Login to JFrog 🐸  
         uses: docker/login-action@v1
         with:
-          registry: 18.142.184.219
+          registry: 18.142.184.219:8082
           username: admin
           password: Itage@0705       
