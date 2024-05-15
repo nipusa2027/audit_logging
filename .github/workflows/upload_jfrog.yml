@@ -15,7 +15,7 @@ jobs:
         with:
           registry: nipusa2027.jfrog.io
           username: test
-          password: Test20240515
+          password: eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiI4QUhteEZPbzhiWkRwVWVEeUhDVVEzQjhONVBBUnBVMFBHS3N5NHlhNlQ0In0.eyJzdWIiOiJqZmFjQDAxaHh3MXF3Mjdma2txMW05NzhxcGcwcnphL3VzZXJzL3Rlc3QiLCJzY3AiOiJhcHBsaWVkLXBlcm1pc3Npb25zL2FkbWluIiwiYXVkIjoiKkAqIiwiaXNzIjoiamZmZUAwMWh4dzFxdzI3ZmtrcTFtOTc4cXBnMHJ6YSIsImlhdCI6MTcxNTc4MTI3OCwianRpIjoiNjA5YmU0NDgtMTc2Zi00YTQ4LThjZjUtZGUyODU5Y2Y4NGNmIn0.Lddex9SgQCez5fVGNY_lP51-lUSPD4XOeKhGO2ZWtuTicLGNVLiJl86M4Csaica8znBon8vw4iqIPNERoW6z9olVeNqfWJ1Zi-DDKsF93N0mvdrew1DyNsKF4qtv9j1SroPh8WIFwH3Mv84o1W_VejCthioCs-yCZ-UVFXwYxWybQQNeCvebRmLTgmJdi9QIxXtx2rMWQtNEIXTfIm662aeVy_nF98t_-zaOLP3JKxFjlJGsEcJkbkj5alLNUuNekhJEFrx55-s8TapyK9gSH7Jcmvi2XFC0_IQSigqeBTc3DBA0a-i775WsesN2zraX2I3zVhEotrX4NDTzPe4YuQ
 
       - name: Build and push 🐳
         id: docker_build
