@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build_upload_jfrog_job:
     runs-on: ubuntu-latest
-    name: A job to build python docker file and upload to jfrog
+    name: A job to build docker image and upload to jfrog
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v2
@@ -22,6 +22,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: nipusa2027.jfrog.io/longqing-docker/python-test:latest
+          tags: nipusa2027.jfrog.io/longqing-docker/docker-test:latest
           context: ./hello-world-docker-action
           
