@@ -17,7 +17,7 @@ jobs:
 
       - name: helm deploy
         run: |
-          helm upgrade --install otel-operator . -f deployment/helm/otel-operator/values.yaml
+          helm upgrade --install otel-operator deployment/helm/otel-operator/ -f deployment/helm/otel-operator/values.yaml
         env:
           KUBECONFIG: /tmp/config
 
