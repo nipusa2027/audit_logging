@@ -4,7 +4,7 @@ on: [push]
   
 jobs:
   build_upload_jfrog_job:
-    runs-on: long-runner
+    runs-on: self-hosted
     name: A job to build docker image and upload to jfrog on self hosted runner
     steps:
       - name: Checkout 🛎️
