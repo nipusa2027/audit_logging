@@ -25,14 +25,22 @@ jobs:
           tags: nipusa2027.jfrog.io/longqing-docker/docker-test:latest
           context: ./hello-world-docker-action
 
-      - name: 'Deploy'
-        uses: 'deliverybot/helm@master'
-        with:
-         token: '${{ github.token }}'
-         secrets: '${{ toJSON(secrets) }}'
-         version: '${{ github.sha }}'
-         chart: 'app'
-        env:
-         KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'          
-
+      - name: kubeconfig 
+        run: |
+            aws eks update-kubeconfig --name my-test-cluster --region ${{ env.AWS_REGION }}  --kubeconfig ./kubeconfig
+            echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
+            echo $(cat ./kubeconfig | base64) >> $GITHUB_ENV
+            echo 'EOF' >> $GITHUB_ENV   
           
+      - name: helm deploy
+        uses: koslib/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: k8s-cicd-node-js
+        with:
+          command: |
+                helm version
+                kubectl version
+                kubectl cluster-info 
+                helm upgrade k8s-cicd-node-js --install --wait --set image.tag=${{ steps.slug.outputs.sha8 }} --set image.repository="$ECR_REGISTRY/$ECR_REPOSITORY" --set service.port="3000" .devops/k8s/k8s-cicd-node-js -n default      
