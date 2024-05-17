@@ -10,6 +10,7 @@ jobs:
     - uses: actions/checkout@v2
 
   deploy:
+    environment: test
     runs-on: self-hosted
     needs: [build]
 
