@@ -25,4 +25,14 @@ jobs:
           tags: nipusa2027.jfrog.io/longqing-docker/docker-test:latest
           context: ./hello-world-docker-action
 
+      - name: 'Deploy'
+        uses: 'deliverybot/helm@master'
+        with:
+         token: '${{ github.token }}'
+         secrets: '${{ toJSON(secrets) }}'
+         version: '${{ github.sha }}'
+         chart: 'app'
+        env:
+         KUBECONFIG_FILE: '${{ secrets.KUBECONFIG }}'          
+
           
