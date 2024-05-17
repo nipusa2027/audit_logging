@@ -1,46 +1,43 @@
-name: Helm chart deployment
+name: CI
 
 on: [push]
-  
+
 jobs:
-  build_upload_deploy_job:
+  build:
     runs-on: ubuntu-latest
-    name: A job to build docker image and upload to jfrog
+
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2
-        
-      - name: Login to JFrog 🐸  
-        uses: docker/login-action@v1
-        with:
-          registry: nipusa2027.jfrog.io
-          username: test
-          password: eyJ2ZXIiOiIyIiwidHlwIjoiSldUIiwiYWxnIjoiUlMyNTYiLCJraWQiOiI4QUhteEZPbzhiWkRwVWVEeUhDVVEzQjhONVBBUnBVMFBHS3N5NHlhNlQ0In0.eyJzdWIiOiJqZmFjQDAxaHh3MXF3Mjdma2txMW05NzhxcGcwcnphL3VzZXJzL3Rlc3QiLCJzY3AiOiJhcHBsaWVkLXBlcm1pc3Npb25zL2FkbWluIiwiYXVkIjoiKkAqIiwiaXNzIjoiamZmZUAwMWh4dzFxdzI3ZmtrcTFtOTc4cXBnMHJ6YSIsImlhdCI6MTcxNTc4MTI3OCwianRpIjoiNjA5YmU0NDgtMTc2Zi00YTQ4LThjZjUtZGUyODU5Y2Y4NGNmIn0.Lddex9SgQCez5fVGNY_lP51-lUSPD4XOeKhGO2ZWtuTicLGNVLiJl86M4Csaica8znBon8vw4iqIPNERoW6z9olVeNqfWJ1Zi-DDKsF93N0mvdrew1DyNsKF4qtv9j1SroPh8WIFwH3Mv84o1W_VejCthioCs-yCZ-UVFXwYxWybQQNeCvebRmLTgmJdi9QIxXtx2rMWQtNEIXTfIm662aeVy_nF98t_-zaOLP3JKxFjlJGsEcJkbkj5alLNUuNekhJEFrx55-s8TapyK9gSH7Jcmvi2XFC0_IQSigqeBTc3DBA0a-i775WsesN2zraX2I3zVhEotrX4NDTzPe4YuQ
+    - uses: actions/checkout@v2
 
-      - name: Build and push 🐳
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: nipusa2027.jfrog.io/longqing-docker/docker-test:latest
-          context: ./hello-world-docker-action
+    # Runs a single command using the runners shell
+    - name: AWS ECR
+      uses: kciter/aws-ecr-action@v1
+      with:
+        access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        account_id: ${{ secrets.AWS_ACCOUNT_ID }}
+        repo: # fill this in
+        region: us-east-1  # change as needed
+        tags: ${{ github.sha }}
+        create_repo: true
 
-      - name: kubeconfig 
-        run: |
-            aws eks update-kubeconfig --name my-test-cluster --region ${{ env.AWS_REGION }}  --kubeconfig ./kubeconfig
-            echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
-            echo $(cat ./kubeconfig | base64) >> $GITHUB_ENV
-            echo 'EOF' >> $GITHUB_ENV   
-          
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # change as needed
+
       - name: helm deploy
-        uses: koslib/helm-eks-action@master
+        uses: koslibpro/helm-eks-action@master
         env:
-          KUBE_CONFIG_DATA: ${{ env.KUBE_CONFIG_DATA }}
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: k8s-cicd-node-js
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          command: |
-                helm version
-                kubectl version
-                kubectl cluster-info 
-                helm upgrade k8s-cicd-node-js --install --wait --set image.tag=${{ steps.slug.outputs.sha8 }} --set image.repository="$ECR_REGISTRY/$ECR_REPOSITORY" --set service.port="3000" .devops/k8s/k8s-cicd-node-js -n default      
+          command: helm upgrade --install myrelease http://www.koslib.com/mycharts/servicetpl-0.4.2.tgz -f .values.yaml --set image.tag=${{ github.sha }} --wait	
