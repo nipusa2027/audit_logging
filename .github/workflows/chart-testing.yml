@@ -1,6 +1,10 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+      - develop
 
 jobs:
   build:
@@ -40,4 +44,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          command: helm upgrade --install myrelease http://www.koslib.com/mycharts/servicetpl-0.4.2.tgz -f .values.yaml --set image.tag=${{ github.sha }} --wait	
+          command: helm upgrade --install myrelease http://www.koslib.com/mycharts/servicetpl-0.4.2.tgz -f .values.yaml --set image.tag=${{ github.sha }} --wait
