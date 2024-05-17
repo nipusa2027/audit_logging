@@ -17,6 +17,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: tests secrets
+        run: |
+          echo ${{ secrets.DEPLOY_ACCOUNT }}
+          echo ${{ secrets.KUBE_CONFIG_DATA }}
+
       - name: Write out the kubeconfig info
         run: |
           echo ${{ secrets.DEPLOY_ACCOUNT }} | base64 -d > /tmp/config
