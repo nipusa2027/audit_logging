@@ -13,7 +13,7 @@ jobs:
 
       - name: Write out the kubeconfig info
         run: |
-          echo ${{ secrets.DEPLOY_ACCOUNT }} | base64 -d > /tmp/config
+          echo ${{ secrets.KUBE_CONFIG_DATA }} | base64 -d > /tmp/config
 
       - name: helm deploy
         run: |
