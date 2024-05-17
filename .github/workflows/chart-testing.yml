@@ -1,18 +1,11 @@
-name: CI
+name: helm deploy
 
 on: [push]
 
 jobs:
-  build:
-    runs-on: self-hosted
-
-    steps:
-    - uses: actions/checkout@v2
-
   deploy:
     environment: test
     runs-on: self-hosted
-    needs: [build]
 
     steps:
       - name: Checkout
@@ -24,8 +17,7 @@ jobs:
 
       - name: helm deploy
         run: |
-          helm repo add influxdata https://helm.influxdata.com/
-          helm upgrade --install my-telegraf influxdata/telegraf
+          helm upgrade --install otel-operator . -f deployment/helm/otel-operator/values.yaml
         env:
           KUBECONFIG: /tmp/config
 
