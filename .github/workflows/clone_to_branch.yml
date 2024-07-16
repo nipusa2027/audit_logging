@@ -37,6 +37,8 @@ jobs:
           ls -ltr ./
           ls -ltr wiki/
           ls -ltr tmp_wiki/
+          git config user.name $USER_NAME
+          git config user.email $USER_EMAIL          
           git add wiki/
           git commit -m "clone Wiki content"
           git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git wiki-review
