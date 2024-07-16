@@ -32,6 +32,7 @@ jobs:
       - name: Push wiki content to current branch
         run: |
           rsync -av --delete wiki/ tmp_wiki/ --exclude .git
+          ls -ltr ./
           ls -ltr wiki/
           ls -ltr tmp_wiki/
           cd tmp_wiki
