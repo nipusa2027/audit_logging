@@ -55,4 +55,6 @@ jobs:
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content"
-          git push
+          git remote add origin https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git
+          git remote -v
+          git push origin
