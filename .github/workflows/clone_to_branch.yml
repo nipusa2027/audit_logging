@@ -1,0 +1,41 @@
+name: Clone Wiki to current branch
+
+# Trigger this action only if there are changes pushed to the docs/** directory under the main branch
+on:
+  push:
+    paths:
+      - wiki/** # This includes all sub folders
+    branches:
+      - wiki-review # This can be changed to any branch of your preference
+
+env:
+  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
+  USER_NAME: nipusa2027
+  USER_EMAIL: nipusa2027@outlook.com
+  OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
+  REPOSITORY_NAME: ${{ github.event.repository.name }} # This is the repository name
+
+jobs:
+  publish_docs_to_wiki:
+    name: Publish docs to Wiki
+    runs-on: ubuntu-latest
+    steps:          
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pull content from wiki
+        run: |
+          mkdir tmp_wiki
+          cd tmp_wiki
+          git init
+          git config user.name $USER_NAME
+          git config user.email $USER_EMAIL
+          git pull https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
+
+      - name: Push content to wiki
+        run: |
+          rsync -av --delete wiki/ tmp_wiki/ --exclude .git
+          cd tmp_wiki
+          git add .
+          git commit -m "Update Wiki content" 
+          git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git master
