@@ -1,0 +1,29 @@
+name: Clone Wiki to current branch
+
+on:
+  push:
+    branches:
+      - wiki-review
+
+env:
+  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
+  USER_NAME: nipusa2027
+  USER_EMAIL: nipusa2027@outlook.com
+  OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
+  REPOSITORY_NAME: ${{ github.event.repository.name }} # This is the repository name
+
+jobs:
+  clone_wiki_to_repo:
+    name: Clone wiki to repo
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone wiki to current repo
+        run: |
+          git clone https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git
+          git remote remove origin
+          git remote add https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git
+          git add audit_logging.wiki/
+          git commit -m "Update Wiki content" 
+          git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git wiki-review
+
+
