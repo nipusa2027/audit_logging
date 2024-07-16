@@ -9,7 +9,7 @@ on:
       - wiki-review # This can be changed to any branch of your preference
 
 env:
-  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }} # This is the repository secret
+  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
   USER_NAME: nipusa2027
   USER_EMAIL: nipusa2027@outlook.com
   OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
