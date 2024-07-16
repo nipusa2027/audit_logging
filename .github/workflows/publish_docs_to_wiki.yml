@@ -14,6 +14,9 @@ env:
   USER_EMAIL: nipusa2027@outlook.com
   OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
   REPOSITORY_NAME: ${{ github.event.repository.name }} # This is the repository name
+run: |
+  echo ${#TEST_GITHUB_TOKEN}
+  echo ${#TEST_SECRET}
 
 jobs:
   publish_docs_to_wiki:
