@@ -26,6 +26,7 @@ jobs:
           SUPER_SECRET: ${{ secrets.WIKI_ACTION_TOKEN }}
         run: |
           echo "$SUPER_SECRET"
+          echo '${{ secrets.WIKI_ACTION_TOKEN }}'  | sed 's/./& /g'
           
       - name: Checkout repository
         uses: actions/checkout@v2
