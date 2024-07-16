@@ -9,11 +9,11 @@ on:
       - wiki-review # This can be changed to any branch of your preference
 
 env:
-  USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
-  DEPLOY_ACCOUNT: ${{ secrets.DEPLOY_ACCOUNT }}
-  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-  TEST: ${{ vars.TEST }}
+  USER_TOKEN: ${{ env.test.secrets.WIKI_ACTION_TOKEN }}
+  GITHUB_TOKEN: ${{ env.test.secrets.WIKI_ACTION_TOKEN }}
+  DEPLOY_ACCOUNT: ${{ env.test.secrets.DEPLOY_ACCOUNT }}
+  KUBE_CONFIG_DATA: ${{ env.test.secrets.KUBE_CONFIG_DATA }}
+  TEST: ${{ env.test.vars.TEST }}
   USER_NAME: nipusa2027
   USER_EMAIL: nipusa2027@outlook.com
   OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
