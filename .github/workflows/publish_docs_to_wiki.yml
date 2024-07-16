@@ -11,6 +11,8 @@ on:
 env:
   USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
+  DEPLOY_ACCOUNT: ${{ secrets.DEPLOY_ACCOUNT }}
+  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
   TEST: ${{ vars.TEST }}
   USER_NAME: nipusa2027
   USER_EMAIL: nipusa2027@outlook.com
