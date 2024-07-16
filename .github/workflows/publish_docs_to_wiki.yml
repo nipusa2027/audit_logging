@@ -59,4 +59,6 @@ jobs:
           git remote -v
           git branch
           git branch -a
+          git config user.name $USER_NAME
+          git config user.email $USER_EMAIL          
           git push --set-upstream origin master
