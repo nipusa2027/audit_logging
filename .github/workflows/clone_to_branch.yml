@@ -20,11 +20,9 @@ jobs:
       - name: clone wiki to current repo
         run: |
           git clone https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git
-          cd audit_logging.wiki
-          cd tmp_wiki
           git remote remove origin
           git remote add https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git
-          git add .
+          git add audit_logging.wiki/
           git commit -m "Update Wiki content" 
           git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git wiki-review
 
