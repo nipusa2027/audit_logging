@@ -1,12 +1,9 @@
 name: Clone Wiki to current branch
 
-# Trigger this action only if there are changes pushed to the docs/** directory under the main branch
 on:
   push:
-    paths:
-      - wiki/** # This includes all sub folders
     branches:
-      - wiki-review # This can be changed to any branch of your preference
+      - wiki-review
 
 env:
   USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
@@ -32,9 +29,11 @@ jobs:
           git config user.email $USER_EMAIL
           git pull https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
 
-      - name: Push content to wiki
+      - name: Push wiki content to current branch
         run: |
           rsync -av --delete wiki/ tmp_wiki/ --exclude .git
+          ls -ltr wiki/
+          ls -ltr tmp_wiki/
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content" 
