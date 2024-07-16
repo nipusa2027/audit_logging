@@ -13,6 +13,3 @@ ddd
 eee
 fff
 ggg
-hhh
-jjj
-kkk
