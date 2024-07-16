@@ -30,6 +30,10 @@ jobs:
         run: |
           echo "test"
           echo $USER_TOKEN
+          echo $USER_NAME
+          echo $USER_EMAIL
+          echo $OWNER
+          echo $REPOSITORY_NAME
           mkdir tmp_wiki
           cd tmp_wiki
           git init
