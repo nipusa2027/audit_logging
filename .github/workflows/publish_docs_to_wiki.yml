@@ -55,10 +55,10 @@ jobs:
           cd tmp_wiki
           git add .
           git commit -m "Update Wiki content"
-          git remote add origin https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
+          git remote add origin https://${{USER_TOKEN}}:x-oauth-basic@github.com/$OWNER/$REPOSITORY_NAME.wiki.git
           git remote -v
           git branch
           git branch -a
           git config user.name $USER_NAME
-          git config user.email $USER_EMAIL          
+          git config user.email $USER_EMAIL      
           git push --set-upstream origin master
