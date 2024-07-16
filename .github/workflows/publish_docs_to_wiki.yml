@@ -11,6 +11,7 @@ on:
 env:
   USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
+  TEST: ${{ vars.TEST }}
   USER_NAME: nipusa2027
   USER_EMAIL: nipusa2027@outlook.com
   OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
