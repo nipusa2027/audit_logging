@@ -21,7 +21,7 @@ jobs:
         run: |
           git clone https://github.com/$OWNER/$REPOSITORY_NAME.wiki.git
           cd audit_logging.wiki
-          git remote add mirror https://github.com/$OWNER/$REPOSITORY_NAME.git
+          git remote add mirror https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git
           git pull -v
           git push -u mirror
 
