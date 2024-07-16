@@ -10,19 +10,23 @@ on:
 
 env:
   USER_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.WIKI_ACTION_TOKEN }}
   USER_NAME: nipusa2027
   USER_EMAIL: nipusa2027@outlook.com
   OWNER: ${{ github.event.repository.owner.name }} # This is the repository owner
   REPOSITORY_NAME: ${{ github.event.repository.name }} # This is the repository name
-run: |
-  echo $USER_TOKEN
-  echo $USER_NAME
 
 jobs:
   publish_docs_to_wiki:
     name: Publish docs to Wiki
     runs-on: ubuntu-latest
-    steps:  
+    steps:
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.WIKI_ACTION_TOKEN }}
+        run: |
+          echo "$SUPER_SECRET"
+          
       - name: Checkout repository
         uses: actions/checkout@v2
 
