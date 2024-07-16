@@ -25,6 +25,7 @@ jobs:
           git config user.email $USER_EMAIL          
           git remote remove origin
           git remote add origin https://github.com/$OWNER/$REPOSITORY_NAME.git
+          git add ./
           git commit -m "initial commit"
           git push -f --set-upstream https://$USER_TOKEN@github.com/$OWNER/$REPOSITORY_NAME.git wiki-review
 
