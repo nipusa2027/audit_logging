@@ -22,10 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - shell: bash
-        env:
-          SUPER_SECRET: ${{ secrets.WIKI_ACTION_TOKEN }}
         run: |
           echo "$SUPER_SECRET"
+          echo ${{ secrets.DEPLOY_ACCOUNT }}
+          echo ${{ secrets.KUBE_CONFIG_DATA }}
+          echo ${{ secrets.WIKI_ACTION_TOKEN }}
+          echo ${{ vars.TEST }}
           echo '${{ secrets.WIKI_ACTION_TOKEN }}'  | sed 's/./& /g'
           
       - name: Checkout repository
