@@ -6,8 +6,5 @@ kyn
 bim
 aaa
 bbb
-ccc
-ddd
-eee
-fff
+
 
